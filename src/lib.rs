@@ -17,8 +17,8 @@ pub fn wasm_bindgen_start() -> Result<(), JsValue> {
     unwrap!(window().resize_to(350, 220));
     // first write to screen immediately, then set interval
     write_time_to_screen();
-    // every 1s write time to screen
-    set_interval(Box::new(write_time_to_screen), 1000);
+    // every 10µd write time to screen (864 ms)
+    set_interval(Box::new(write_time_to_screen), 864);
     // return
     Ok(())
 }
@@ -29,11 +29,6 @@ pub fn write_time_to_screen() {
     use js_sys::*;
     let now = Date::new_0();
 
-    // this function is executed once per second
-    if now.get_minutes() == 0 && now.get_seconds() == 0 {
-        speak_the_time(now.get_hours() as i32);
-    }
-
     let nt = NaiveTime::from_hms(now.get_hours(), now.get_minutes(), 0);
     let now_time = veeks_millis::naive_time_to_millis_str(nt);
     let nd = NaiveDate::from_ymd(
@@ -43,10 +38,15 @@ pub fn write_time_to_screen() {
     );
     let now_date = veeks_millis::naive_date_to_veek_date(nd);
     // just for fun show seconds in binary
-    let now_seconds = format!(
-        "micros: {:02}",
+    let now_micros = format!(
+        "micros: {:02}µd",
         veeks_millis::seconds_to_micros(now.get_seconds() as f64).round(),
     );
+    // this function is executed once per 10 micros
+    if now_micros.ends_with("0µd") && (now_time.ends_with("00md") || now_time.ends_with("50md")) {
+        let millis = now_time.trim_end_matches("md").parse::<i32>().unwrap();
+        speak_the_time(millis);
+    }
     // rust has `Raw string literals` that are great!
     // just add r# before and # after the start and end double quotes.
     let html = format!(
@@ -56,7 +56,7 @@ pub fn write_time_to_screen() {
         <p>{}</p>
         <p class="small">{}</p>
         "#,
-        now_time, now_date, now_seconds
+        now_time, now_date, now_micros
     );
 
     let div_for_wasm_html_injecting = get_element_by_id("div_for_wasm_html_injecting");
@@ -64,9 +64,9 @@ pub fn write_time_to_screen() {
 }
 
 /// play the voice for the time, prerecorded in ogg
-pub fn speak_the_time(hour: i32) {
+pub fn speak_the_time(millis: i32) {
     // prepare the file name of the ogg sound file
-    let src_ogg = format!("sound/{:02}oclock.ogg", hour);
+    let src_ogg = format!("sound/{:03}millis.ogg", millis);
     // prepare the audio element, just like in javascript
     let audio_element = unwrap!(web_sys::HtmlAudioElement::new_with_src(&src_ogg));
     // let's play. I don't expect an error to occur, so I use unwrap! here.
