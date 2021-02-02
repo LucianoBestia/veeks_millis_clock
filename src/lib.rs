@@ -17,8 +17,8 @@ pub fn wasm_bindgen_start() -> Result<(), JsValue> {
     unwrap!(window().resize_to(350, 220));
     // first write to screen immediately, then set interval
     write_time_to_screen();
-    // every 10µd write time to screen (864 ms)
-    set_interval(Box::new(write_time_to_screen), 864);
+    // every 10µd write time to screen (864 ms) but it is not working perfectly
+    set_interval(Box::new(write_time_to_screen), 860);
     // return
     Ok(())
 }
@@ -39,8 +39,8 @@ pub fn write_time_to_screen() {
     let now_date = veeks_millis::naive_date_to_veek_date(nd);
     // just for fun show seconds in binary
     let now_micros = format!(
-        "micros: {:02}µd",
-        veeks_millis::seconds_to_micros(now.get_seconds() as f64).round(),
+        "micros: {:03}µd",
+        ((veeks_millis::seconds_to_micros(now.get_seconds() as f64) / 10.0).round() * 10.0) as i32,
     );
     // this function is executed once per 10 micros
     if now_micros.ends_with("0µd") && (now_time.ends_with("00md") || now_time.ends_with("50md")) {

@@ -5,7 +5,7 @@
 [comment]: # (lmake_cargo_toml_to_md start)
 
 **clock with new date time units formats: veeks and millis**  
-***[repo](https://github.com/LucianoBestia/veeks_millis_clock); version: 2021.202.1943  date: 2021-02-02 authors: Luciano Bestia***  
+***[repo](https://github.com/LucianoBestia/veeks_millis_clock); version: 2021.202.1952  date: 2021-02-02 authors: Luciano Bestia***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 
