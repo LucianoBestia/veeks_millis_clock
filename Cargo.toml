@@ -1,0 +1,52 @@
+[package]
+name = "veeks_millis_clock"
+version = "2021.202.1845"
+authors = ["Luciano Bestia <Luciano.Bestia@gmail.com>"]
+edition = "2018"
+description = "clock with new date time units formats: veeks and millis"
+repository = "https://github.com/LucianoBestia/veeks_millis_clock"
+readme = "README.md"
+license = "MIT"
+keywords = ["wasm"]
+categories = ["learning"]
+publish = false
+
+[lib]
+# cdylib is for the wasm module library
+crate-type = ["cdylib"]
+
+[dependencies]
+veeks_millis = "0.5.5"
+unwrap = "1.2.1"
+wasm-bindgen = { version = "0.2.69", features = ["serde-serialize"] }
+console_error_panic_hook = "0.1.6"
+js-sys = "0.3.46"
+chrono = "0.4.19"
+
+[dependencies.web-sys]
+version = "0.3.46"
+features = [
+  "AbortController",
+  "console",
+  "Document",
+  "Element",
+  "ErrorEvent",
+  "Headers",
+  "HtmlAudioElement",
+  "HtmlElement",
+  "HtmlHtmlElement",
+  "KeyboardEvent",
+  "Location",
+  "MouseEvent",
+  "Navigator",
+  "Node",
+  "Response",
+  "Screen",
+  "Window",
+]
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3.19"
+
+[profile.release]
+panic = "abort"
