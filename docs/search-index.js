@@ -1,0 +1,4 @@
+var searchIndex = JSON.parse('{\
+"veeks_millis_clock":{"doc":"","i":[[5,"wasm_bindgen_start","veeks_millis_clock","To start the Wasm application, wasm_bindgen runs this…",null,[[],[["result",4],["jsvalue",3]]]],[5,"__wasm_bindgen_generated_wasm_bindgen_start","","To start the Wasm application, wasm_bindgen runs this…",null,[[]]],[5,"write_time_to_screen","","write local time to screen",null,[[]]],[5,"speak_the_time","","play the voice for the time, prerecorded in ogg",null,[[]]],[5,"set_interval","","A high-level wrapper for…",null,[[["box",3],["fn",8]]]],[5,"window","","return window object",null,[[],["window",3]]],[5,"get_element_by_id","","get element by id",null,[[],["element",3]]],[5,"debug_write","","debug write into session_storage",null,[[]]]],"p":[]}\
+}');
+addSearchOptions(searchIndex);initSearch(searchIndex);

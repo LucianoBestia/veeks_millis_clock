@@ -16,6 +16,7 @@ script= [
 "echo    $ cargo make release - increment version in Cargo.toml and service_worker.js, build release version and copy pkg to web content folder",
 "echo Run the web server in a separate terminal: 'cd ~/rustprojects/veeks_millis_clock/web_server_folder/;basic-http-server'",
 "echo Run the web app in your browser: 'http://127.0.0.1:4000/veeks_millis_clock/'",
+"echo    $ cargo make doc - includes from Cargo.toml to README.md and from README.md to main.rs or lib.rs, generates doc and copies to docs folder, exports codetour to .md.",
 "echo    $ cargo make publish_to_web - automation for publish",
 "echo "
 ]
@@ -40,6 +41,34 @@ script = [
     "echo Finished: Run the web server in a separate terminal: 'cd ~/rustprojects/veeks_millis_clock/web_server_folder/;basic-http-server'",
     "echo Finished: Run the web app in your browser: 'http://127.0.0.1:4000/veeks_millis_clock/'",
 ]		
+
+
+[tasks.doc]
+description = "cargo doc - create docs from doc comments"
+clear = true
+script= [
+    "clear",
+    "echo $ lmake_lines_of_code",
+    "lmake_lines_of_code",
+    "echo $ lmake_cargo_toml_to_md",
+    "lmake_cargo_toml_to_md",
+    "echo $ lmake_md_to_doc_comments",
+    "lmake_md_to_doc_comments",
+    "echo $ cargo doc --no-deps --document-private-items",
+    # create doc from doc comments
+    "cargo doc --no-deps --document-private-items",
+    "echo $ codetour_export_to_md",
+    # export code tour to md
+    "codetour_export_to_md",
+    # copy to /docs/ because it is github standard
+    "echo $ rsync -a --info=progress2 --delete-after target/doc/ docs/",
+    "rsync -a --info=progress2 --delete-after target/doc/ docs/",
+    # create simple index.html file in docs folder
+    "echo create simple index.html file in docs folder",
+    "echo \"<meta http-equiv=\\\"refresh\\\" content=\\\"0; url=${CARGO_MAKE_CRATE_NAME}/index.html\\\" />\" > docs/index.html",
+    # message to help user with next move
+    "echo after successful doc, run cargo make commit msg_for_commit",
+]
 
 [tasks.publish_to_web]
 description = "publish to web server"

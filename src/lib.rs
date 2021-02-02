@@ -14,7 +14,7 @@ pub fn wasm_bindgen_start() -> Result<(), JsValue> {
         env!("CARGO_PKG_VERSION")
     ));
     // set the window initial size
-    unwrap!(window().resize_to(300, 240));
+    unwrap!(window().resize_to(350, 220));
     // first write to screen immediately, then set interval
     write_time_to_screen();
     // every 1s write time to screen

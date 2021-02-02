@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../veeks_millis_clock/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<span id="2">  2</span>
+<span id="3">  3</span>
+<span id="4">  4</span>
+<span id="5">  5</span>
+<span id="6">  6</span>
+<span id="7">  7</span>
+<span id="8">  8</span>
+<span id="9">  9</span>
+<span id="10"> 10</span>
+<span id="11"> 11</span>
+<span id="12"> 12</span>
+<span id="13"> 13</span>
+<span id="14"> 14</span>
+<span id="15"> 15</span>
+<span id="16"> 16</span>
+<span id="17"> 17</span>
+<span id="18"> 18</span>
+<span id="19"> 19</span>
+<span id="20"> 20</span>
+<span id="21"> 21</span>
+<span id="22"> 22</span>
+<span id="23"> 23</span>
+<span id="24"> 24</span>
+<span id="25"> 25</span>
+<span id="26"> 26</span>
+<span id="27"> 27</span>
+<span id="28"> 28</span>
+<span id="29"> 29</span>
+<span id="30"> 30</span>
+<span id="31"> 31</span>
+<span id="32"> 32</span>
+<span id="33"> 33</span>
+<span id="34"> 34</span>
+<span id="35"> 35</span>
+<span id="36"> 36</span>
+<span id="37"> 37</span>
+<span id="38"> 38</span>
+<span id="39"> 39</span>
+<span id="40"> 40</span>
+<span id="41"> 41</span>
+<span id="42"> 42</span>
+<span id="43"> 43</span>
+<span id="44"> 44</span>
+<span id="45"> 45</span>
+<span id="46"> 46</span>
+<span id="47"> 47</span>
+<span id="48"> 48</span>
+<span id="49"> 49</span>
+<span id="50"> 50</span>
+<span id="51"> 51</span>
+<span id="52"> 52</span>
+<span id="53"> 53</span>
+<span id="54"> 54</span>
+<span id="55"> 55</span>
+<span id="56"> 56</span>
+<span id="57"> 57</span>
+<span id="58"> 58</span>
+<span id="59"> 59</span>
+<span id="60"> 60</span>
+<span id="61"> 61</span>
+<span id="62"> 62</span>
+<span id="63"> 63</span>
+<span id="64"> 64</span>
+<span id="65"> 65</span>
+<span id="66"> 66</span>
+<span id="67"> 67</span>
+<span id="68"> 68</span>
+<span id="69"> 69</span>
+<span id="70"> 70</span>
+<span id="71"> 71</span>
+<span id="72"> 72</span>
+<span id="73"> 73</span>
+<span id="74"> 74</span>
+<span id="75"> 75</span>
+<span id="76"> 76</span>
+<span id="77"> 77</span>
+<span id="78"> 78</span>
+<span id="79"> 79</span>
+<span id="80"> 80</span>
+<span id="81"> 81</span>
+<span id="82"> 82</span>
+<span id="83"> 83</span>
+<span id="84"> 84</span>
+<span id="85"> 85</span>
+<span id="86"> 86</span>
+<span id="87"> 87</span>
+<span id="88"> 88</span>
+<span id="89"> 89</span>
+<span id="90"> 90</span>
+<span id="91"> 91</span>
+<span id="92"> 92</span>
+<span id="93"> 93</span>
+<span id="94"> 94</span>
+<span id="95"> 95</span>
+<span id="96"> 96</span>
+<span id="97"> 97</span>
+<span id="98"> 98</span>
+<span id="99"> 99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+</pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="ident">chrono</span>::{<span class="ident">Datelike</span>, <span class="ident">NaiveDate</span>, <span class="ident">NaiveTime</span>, <span class="ident">Timelike</span>};
+<span class="kw">use</span> <span class="ident">unwrap</span>::<span class="ident">unwrap</span>;
+<span class="kw">use</span> <span class="ident">wasm_bindgen</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">web_sys</span>::<span class="ident">console</span>;
+
+<span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">start</span>)]</span>
+<span class="doccomment">/// To start the Wasm application, wasm_bindgen runs this functions</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wasm_bindgen_start</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">JsValue</span><span class="op">&gt;</span> {
+    <span class="comment">// Initialize debugging for when/if something goes wrong.</span>
+    <span class="ident">console_error_panic_hook</span>::<span class="ident">set_once</span>();
+    <span class="comment">// write the app version just for debug purposes</span>
+    <span class="ident">debug_write</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+        <span class="string">&quot;veeks_millis_clock v{}&quot;</span>,
+        <span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>)
+    ));
+    <span class="comment">// set the window initial size</span>
+    <span class="macro">unwrap</span><span class="macro">!</span>(<span class="ident">window</span>().<span class="ident">resize_to</span>(<span class="number">350</span>, <span class="number">220</span>));
+    <span class="comment">// first write to screen immediately, then set interval</span>
+    <span class="ident">write_time_to_screen</span>();
+    <span class="comment">// every 1s write time to screen</span>
+    <span class="ident">set_interval</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">write_time_to_screen</span>), <span class="number">1000</span>);
+    <span class="comment">// return</span>
+    <span class="prelude-val">Ok</span>(())
+}
+
+<span class="doccomment">/// write local time to screen</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_time_to_screen</span>() {
+    <span class="comment">// local time and date</span>
+    <span class="kw">use</span> <span class="ident">js_sys</span>::<span class="kw-2">*</span>;
+    <span class="kw">let</span> <span class="ident">now</span> <span class="op">=</span> <span class="ident">Date</span>::<span class="ident">new_0</span>();
+
+    <span class="comment">// this function is executed once per second</span>
+    <span class="kw">if</span> <span class="ident">now</span>.<span class="ident">get_minutes</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">now</span>.<span class="ident">get_seconds</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="ident">speak_the_time</span>(<span class="ident">now</span>.<span class="ident">get_hours</span>() <span class="kw">as</span> <span class="ident">i32</span>);
+    }
+
+    <span class="kw">let</span> <span class="ident">nt</span> <span class="op">=</span> <span class="ident">NaiveTime</span>::<span class="ident">from_hms</span>(<span class="ident">now</span>.<span class="ident">get_hours</span>(), <span class="ident">now</span>.<span class="ident">get_minutes</span>(), <span class="number">0</span>);
+    <span class="kw">let</span> <span class="ident">now_time</span> <span class="op">=</span> <span class="ident">veeks_millis</span>::<span class="ident">naive_time_to_millis_str</span>(<span class="ident">nt</span>);
+    <span class="kw">let</span> <span class="ident">nd</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(
+        <span class="ident">now</span>.<span class="ident">get_full_year</span>() <span class="kw">as</span> <span class="ident">i32</span>,
+        <span class="ident">now</span>.<span class="ident">get_month</span>() <span class="op">+</span> <span class="number">1</span>,
+        <span class="ident">now</span>.<span class="ident">get_date</span>(),
+    );
+    <span class="kw">let</span> <span class="ident">now_date</span> <span class="op">=</span> <span class="ident">veeks_millis</span>::<span class="ident">naive_date_to_veek_date</span>(<span class="ident">nd</span>);
+    <span class="comment">// just for fun show seconds in binary</span>
+    <span class="kw">let</span> <span class="ident">now_seconds</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+        <span class="string">&quot;micros: {:02}&quot;</span>,
+        <span class="ident">veeks_millis</span>::<span class="ident">seconds_to_micros</span>(<span class="ident">now</span>.<span class="ident">get_seconds</span>() <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">round</span>(),
+    );
+    <span class="comment">// rust has `Raw string literals` that are great!</span>
+    <span class="comment">// just add r# before and # after the start and end double quotes.</span>
+    <span class="kw">let</span> <span class="ident">html</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+        <span class="string">r#&quot;
+        &lt;h1&gt;{}&lt;/h1&gt;
+        &lt;p&gt;&lt;/p&gt;
+        &lt;p&gt;{}&lt;/p&gt;
+        &lt;p class=&quot;small&quot;&gt;{}&lt;/p&gt;
+        &quot;#</span>,
+        <span class="ident">now_time</span>, <span class="ident">now_date</span>, <span class="ident">now_seconds</span>
+    );
+
+    <span class="kw">let</span> <span class="ident">div_for_wasm_html_injecting</span> <span class="op">=</span> <span class="ident">get_element_by_id</span>(<span class="string">&quot;div_for_wasm_html_injecting&quot;</span>);
+    <span class="ident">div_for_wasm_html_injecting</span>.<span class="ident">set_inner_html</span>(<span class="kw-2">&amp;</span><span class="ident">html</span>);
+}
+
+<span class="doccomment">/// play the voice for the time, prerecorded in ogg</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">speak_the_time</span>(<span class="ident">hour</span>: <span class="ident">i32</span>) {
+    <span class="comment">// prepare the file name of the ogg sound file</span>
+    <span class="kw">let</span> <span class="ident">src_ogg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;sound/{:02}oclock.ogg&quot;</span>, <span class="ident">hour</span>);
+    <span class="comment">// prepare the audio element, just like in javascript</span>
+    <span class="kw">let</span> <span class="ident">audio_element</span> <span class="op">=</span> <span class="macro">unwrap</span><span class="macro">!</span>(<span class="ident">web_sys</span>::<span class="ident">HtmlAudioElement</span>::<span class="ident">new_with_src</span>(<span class="kw-2">&amp;</span><span class="ident">src_ogg</span>));
+    <span class="comment">// let&#39;s play. I don&#39;t expect an error to occur, so I use unwrap! here.</span>
+    <span class="comment">// If an error would occur, the whole app will be aborted with an error message.</span>
+    <span class="comment">// Error will not occur.</span>
+    <span class="kw">let</span> <span class="ident">_x</span> <span class="op">=</span> <span class="macro">unwrap</span><span class="macro">!</span>(<span class="ident">audio_element</span>.<span class="ident">play</span>());
+}
+
+<span class="doccomment">/// A high-level wrapper for web_sys::window.set_interval_with_callback_and_timeout_and_arguments_0:</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_interval</span>(<span class="ident">handler</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Fn</span>()<span class="op">&gt;</span>, <span class="ident">timeout</span>: <span class="ident">i32</span>) {
+    <span class="kw">let</span> <span class="ident">callback</span> <span class="op">=</span> <span class="ident">Closure</span>::<span class="ident">wrap</span>(<span class="ident">handler</span> <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Fn</span>()<span class="op">&gt;</span>);
+    <span class="kw">use</span> <span class="ident">wasm_bindgen</span>::<span class="ident">JsCast</span>;
+    <span class="ident">window</span>()
+        .<span class="ident">set_interval_with_callback_and_timeout_and_arguments_0</span>(
+            <span class="ident">callback</span>.<span class="ident">as_ref</span>().<span class="ident">unchecked_ref</span>(),
+            <span class="ident">timeout</span>,
+        )
+        .<span class="ident">expect</span>(<span class="string">&quot;Problem setting interval&quot;</span>);
+    <span class="ident">callback</span>.<span class="ident">forget</span>();
+}
+
+<span class="doccomment">/// return window object</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">window</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">web_sys</span>::<span class="ident">Window</span> {
+    <span class="macro">unwrap</span><span class="macro">!</span>(<span class="ident">web_sys</span>::<span class="ident">window</span>())
+}
+
+<span class="doccomment">/// get element by id</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_element_by_id</span>(<span class="ident">element_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">web_sys</span>::<span class="ident">Element</span> {
+    <span class="kw">let</span> <span class="ident">document</span> <span class="op">=</span> <span class="macro">unwrap</span><span class="macro">!</span>(<span class="ident">window</span>().<span class="ident">document</span>());
+    <span class="macro">unwrap</span><span class="macro">!</span>(<span class="ident">document</span>.<span class="ident">get_element_by_id</span>(<span class="ident">element_id</span>))
+}
+
+<span class="doccomment">/// debug write into session_storage</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">debug_write</span>(<span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+    <span class="comment">// writing to the console</span>
+    <span class="ident">console</span>::<span class="ident">log_1</span>(<span class="kw-2">&amp;</span><span class="ident">JsValue</span>::<span class="ident">from_str</span>(<span class="ident">text</span>));
+}
+</pre></div>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "veeks_millis_clock";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
