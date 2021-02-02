@@ -1,4 +1,4 @@
-use chrono::{Datelike, NaiveDate, NaiveTime, Timelike};
+use chrono::{NaiveDate, NaiveTime};
 use unwrap::unwrap;
 use wasm_bindgen::prelude::*;
 use web_sys::console;
