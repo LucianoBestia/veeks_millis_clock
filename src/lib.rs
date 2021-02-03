@@ -38,10 +38,15 @@ pub fn write_time_to_screen() {
     );
     let now_date = veeks_millis::VeekDate::from_naive_date(nd).unwrap();
     // micros rounded to 10µd is similar to seconds
-    let now_micros = ((veeks_millis::MicroTime::from_seconds(now.get_seconds() as f64).microday() / 10.0).round() * 10.0) as i32;
-    let now_micros = format!("{:03}µd",now_micros);
+    let now_micros = ((veeks_millis::MicroTime::from_seconds(now.get_seconds() as f64).microday()
+        / 10.0)
+        .round()
+        * 10.0) as i32;
+    let now_micros = format!("{:03}µd", now_micros);
     // this function is executed once per 10 micros
-    if now_micros.ends_with("00µd") && (now_time.to_string().ends_with("00md") || now_time.ends_with("50md")) {
+    if now_micros.ends_with("00µd")
+        && (now_time.to_string().ends_with("00md") || now_time.ends_with("50md"))
+    {
         let millis = now_time.trim_end_matches("md").parse::<i32>().unwrap();
         speak_the_time(millis);
     }
