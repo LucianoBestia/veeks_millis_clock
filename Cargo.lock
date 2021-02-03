@@ -233,9 +233,9 @@ checksum = "7e33648dd74328e622c7be51f3b40a303c63f93e6fa5f08778b6203a4c25c20f"
 
 [[package]]
 name = "veeks_millis"
-version = "0.5.5"
+version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "39a41ff1793d0bf3bb8a1d09c1dc9dcc8ce7bd39bfb77960db8b97f1dcc78340"
+checksum = "48a9a799cba7373cd9e97d87d325a3ba956a798ba9f8626c20c4a882ca09b631"
 dependencies = [
  "chrono",
  "regex",
@@ -244,7 +244,7 @@ dependencies = [
 
 [[package]]
 name = "veeks_millis_clock"
-version = "2021.202.1952"
+version = "2021.203.1431"
 dependencies = [
  "chrono",
  "console_error_panic_hook",

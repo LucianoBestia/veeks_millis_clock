@@ -30,20 +30,18 @@ pub fn write_time_to_screen() {
     let now = Date::new_0();
 
     let nt = NaiveTime::from_hms(now.get_hours(), now.get_minutes(), 0);
-    let now_time = veeks_millis::naive_time_to_millis_str(nt);
+    let now_time = veeks_millis::MilliTime::from_naive_time(nt).to_string();
     let nd = NaiveDate::from_ymd(
         now.get_full_year() as i32,
         now.get_month() + 1,
         now.get_date(),
     );
-    let now_date = veeks_millis::naive_date_to_veek_date(nd);
-    // just for fun show seconds in binary
-    let now_micros = format!(
-        "micros: {:03}µd",
-        ((veeks_millis::seconds_to_micros(now.get_seconds() as f64) / 10.0).round() * 10.0) as i32,
-    );
+    let now_date = veeks_millis::VeekDate::from_naive_date(nd).unwrap();
+    // micros rounded to 10µd is similar to seconds
+    let now_micros = ((veeks_millis::MicroTime::from_seconds(now.get_seconds() as f64).microday() / 10.0).round() * 10.0) as i32;
+    let now_micros = format!("{:03}µd",now_micros);
     // this function is executed once per 10 micros
-    if now_micros.ends_with("0µd") && (now_time.ends_with("00md") || now_time.ends_with("50md")) {
+    if now_micros.ends_with("00µd") && (now_time.to_string().ends_with("00md") || now_time.ends_with("50md")) {
         let millis = now_time.trim_end_matches("md").parse::<i32>().unwrap();
         speak_the_time(millis);
     }
@@ -54,7 +52,7 @@ pub fn write_time_to_screen() {
         <h1>{}</h1>
         <p></p>
         <p>{}</p>
-        <p class="small">{}</p>
+        <p class="small">microdays: {}</p>
         "#,
         now_time, now_date, now_micros
     );

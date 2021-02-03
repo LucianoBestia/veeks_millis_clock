@@ -1,6 +1,6 @@
 [package]
 name = "veeks_millis_clock"
-version = "2021.202.1952"
+version = "2021.203.1431"
 authors = ["Luciano Bestia <Luciano.Bestia@gmail.com>"]
 edition = "2018"
 description = "clock with new date time units formats: veeks and millis"
@@ -16,7 +16,7 @@ publish = false
 crate-type = ["cdylib"]
 
 [dependencies]
-veeks_millis = "0.5.5"
+veeks_millis = "1.0.2"
 unwrap = "1.2.1"
 wasm-bindgen = { version = "0.2.69", features = ["serde-serialize"] }
 console_error_panic_hook = "0.1.6"
