@@ -30,6 +30,10 @@
 A **big digital clock** on the screen with the new veeks and millis is nice to have.  
 It is a PWA application made with rust and compiled to wasm.  
 
+## Dependency
+
+<https://github.com/LucianoBestia/veeks_millis>  
+
 ## cargo crev reviews and advisory
 
 It is recommended to always use [cargo-crev](https://github.com/crev-dev/cargo-crev)  
