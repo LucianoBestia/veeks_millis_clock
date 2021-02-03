@@ -18,7 +18,7 @@ pub fn wasm_bindgen_start() -> Result<(), JsValue> {
     // first write to screen immediately, then set interval
     write_time_to_screen();
     // every 10µd write time to screen (864 ms) but it is not working perfectly
-    set_interval(Box::new(write_time_to_screen), 860);
+    set_interval(Box::new(write_time_to_screen), 432);
     // return
     Ok(())
 }
