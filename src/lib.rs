@@ -43,13 +43,7 @@ pub fn write_time_to_screen() {
         .round()
         * 10.0) as i32;
     let now_micros = format!("{:03}µd", now_micros);
-    // this function is executed once per 10 micros
-    if now_micros.ends_with("00µd")
-        && (now_time.to_string().ends_with("00md") || now_time.ends_with("50md"))
-    {
-        let millis = now_time.trim_end_matches("md").parse::<i32>().unwrap();
-        speak_the_time(millis);
-    }
+
     // rust has `Raw string literals` that are great!
     // just add r# before and # after the start and end double quotes.
     let html = format!(
@@ -61,8 +55,21 @@ pub fn write_time_to_screen() {
         "#,
         now_time, now_date, now_micros
     );
-
     let div_for_wasm_html_injecting = get_element_by_id("div_for_wasm_html_injecting");
+    // this function is executed once per 10 micros
+    // I will use a DOM element attribute as a global variable
+    let last_sound = div_for_wasm_html_injecting
+        .get_attribute("data-last_sound")
+        .unwrap();
+    if last_sound != now_time {
+        if now_time.to_string().ends_with("00md") || now_time.ends_with("50md") {
+            let millis = now_time.trim_end_matches("md").parse::<i32>().unwrap();
+            div_for_wasm_html_injecting
+                .set_attribute("data-last_sound", &now_time)
+                .unwrap();
+            speak_the_time(millis);
+        }
+    }
     div_for_wasm_html_injecting.set_inner_html(&html);
 }
 
