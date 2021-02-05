@@ -34,7 +34,9 @@ It is a PWA application made with rust and compiled to wasm.
 
 ## other veeks millis projects
 
+crate:  
 <https://github.com/LucianoBestia/veeks_millis>  
+PWA wasm converter:  
 <https://github.com/LucianoBestia/new_date_time_units_and_formats>
 
 ## cargo crev reviews and advisory
