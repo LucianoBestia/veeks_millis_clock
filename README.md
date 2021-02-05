@@ -23,7 +23,7 @@
 ## Try it
 
 <https://bestia.dev/veeks_millis_clock/>  
-![screenshot](https://github.com/LucianoBestia/veeks_millis_clock/raw/main/images/minimal_clock.jpg?raw=true)
+Compare the classic clock with the new veeks millis:  
 ![screenshot](https://github.com/LucianoBestia/veeks_millis_clock/raw/main/images/compare_clocks.png)
 
 ## clock
