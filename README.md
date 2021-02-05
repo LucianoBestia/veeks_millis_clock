@@ -23,16 +23,18 @@
 ## Try it
 
 <https://bestia.dev/veeks_millis_clock/>  
-![screenshot](https://github.com/LucianoBestia/veeks_millis_clock/blob/main/images/minimal_clock.jpg?raw=true)
+![screenshot](https://github.com/LucianoBestia/veeks_millis_clock/raw/main/images/minimal_clock.jpg?raw=true)
+![screenshot](https://github.com/LucianoBestia/veeks_millis_clock/raw/main/images/compare_clocks.png)
 
 ## clock
 
 A **big digital clock** on the screen with the new veeks and millis is nice to have.  
 It is a PWA application made with rust and compiled to wasm.  
 
-## Dependency
+## other veeks millis projects
 
 <https://github.com/LucianoBestia/veeks_millis>  
+<https://github.com/LucianoBestia/new_date_time_units_and_formats>
 
 ## cargo crev reviews and advisory
 
