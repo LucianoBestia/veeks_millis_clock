@@ -23,8 +23,9 @@
 ## Try it
 
 <https://bestia.dev/veeks_millis_clock/>  
-Compare the classic clock with the new veeks millis:  
+Compare the new veeks millis wit the classic clock:  
 ![screenshot](https://github.com/LucianoBestia/veeks_millis_clock/raw/main/images/compare_clocks.png)
+<https://github.com/LucianoBestia/rust_wasm_pwa_minimal_clock>  
 
 ## clock
 
