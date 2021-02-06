@@ -244,7 +244,7 @@ dependencies = [
 
 [[package]]
 name = "veeks_millis_clock"
-version = "2021.204.1421"
+version = "2021.206.957"
 dependencies = [
  "chrono",
  "console_error_panic_hook",

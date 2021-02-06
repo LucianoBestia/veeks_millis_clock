@@ -1,6 +1,6 @@
 [package]
 name = "veeks_millis_clock"
-version = "2021.204.1421"
+version = "2021.206.957"
 authors = ["Luciano Bestia <Luciano.Bestia@gmail.com>"]
 edition = "2018"
 description = "clock with new date time units formats: veeks and millis"
